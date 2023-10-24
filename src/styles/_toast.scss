@@ -1,0 +1,37 @@
+@import './mixin';
+
+$success: #418944;
+$error: #d74242;
+$warning: #f2974b;
+$info: #1893d5;
+
+.Toastify__toast-container {
+  .Toastify__toast-theme--light {
+    position: relative;
+
+    &.Toastify__toast--success {
+      color: $success;
+      &::before {
+        @include before-background-color;
+      }
+    }
+    &.Toastify__toast--error {
+      color: $error;
+      &::before {
+        @include before-background-color;
+      }
+    }
+    &.Toastify__toast--info {
+      color: $info;
+      &::before {
+        @include before-background-color;
+      }
+    }
+    &.Toastify__toast--warning {
+      color: $warning;
+      &::before {
+        @include before-background-color;
+      }
+    }
+  }
+}

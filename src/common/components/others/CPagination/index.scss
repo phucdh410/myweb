@@ -1,0 +1,33 @@
+.MuiPagination-root.c-pagination {
+  .MuiPaginationItem-root {
+    background-color: #ffffff;
+    color: #124874;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    padding: 8.5px;
+    min-width: 35px;
+    height: 35px;
+
+    & .MuiSvgIcon-root {
+      height: 1.5em;
+      width: 1.5em;
+    }
+
+    &:hover {
+      color: #ffffff;
+      background-color: #124874;
+      & .MuiSvgIcon-root {
+        color: #ffffff;
+      }
+    }
+
+    &.Mui-selected {
+      color: #ffffff;
+      background-color: #124874;
+      &:hover {
+        background-color: #3e83ba;
+      }
+    }
+  }
+}

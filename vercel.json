@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "http://homepage.vtcode.vn:9093/api/:match*"
+    },
+    {
+      "source": "/api/:match*/",
+      "destination": "http://homepage.vtcode.vn:9093/api/:match*/"
+    },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

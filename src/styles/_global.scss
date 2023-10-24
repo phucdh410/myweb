@@ -1,0 +1,32 @@
+*:not(.html-parse-content *) {
+  // Add ":not(.html-parse-content *)" for avoiding reset CSS in HTML parser
+  // HTML parser must contain class name "html-parse-content"
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  font-family: $font-montserrat;
+  // font-family: 'Playpen Sans', cursive;
+  // font-family: 'Raleway', sans-serif;
+}
+
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p {
+  color: $color-secondary;
+}
+
+// Ẩn icon show/hide password của Edge browser
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

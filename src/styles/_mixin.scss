@@ -1,0 +1,7 @@
+@mixin before-background-color {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0.1;
+}

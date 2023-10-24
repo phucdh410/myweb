@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      //Chỉnh sửa Alias nhớ vào vite config theo !!!
+      "@/others/": ["./src/common/components/others/index.ts"],
+      "@/errors/": ["./src/common/components/errors/index.ts"],
+      "@/controls/": ["./src/common/components/controls/index.ts"],
+      "@/layouts/*": ["./src/common/components/layouts/*"],
+      "@/modules/*": ["./src/modules/*"],
+      "@/funcs/": ["./src/utils/funcs/index.ts"],
+      "@/hooks/": ["./src/hooks/index.ts"],
+      "@/apis/*": ["./src/apis/*"],
+      "@/axios/*": ["./src/utils/axios/*"],
+      "@/confirm/": ["./src/utils/confirm/index.ts"],
+      "@/slices/*": ["./src/redux/slices/*"],
+      "@/redux/": ["./src/redux/index.ts"],
+      "@/routes/*": ["./src/routes/*"],
+      "@/constants/*": ["./src/common/constants/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/types/*": ["./src/types/*"]
+      // "@/*": ["./src/*"]
+    }
+  }
+}
