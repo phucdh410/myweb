@@ -10,10 +10,9 @@ import { IAuthState } from '@/slices/auth';
 
 const CAuthProvider = ({ children }: any) => {
   //#region Data
-  const { access_token, refresh_token, isLogined } = useSelector<
-    RootState,
-    IAuthState
-  >((state) => state.auth);
+  const { access_token, isLogined } = useSelector<RootState, IAuthState>(
+    (state) => state.auth,
+  );
 
   const [isLoading, setLoading] = useState<boolean>(true);
   //#endregion
@@ -24,7 +23,7 @@ const CAuthProvider = ({ children }: any) => {
 
       try {
         if (access_token && isLogined) {
-          await getProfile(access_token, refresh_token as string);
+          await getProfile(access_token);
         } else {
           if (
             typeof window !== 'undefined' &&

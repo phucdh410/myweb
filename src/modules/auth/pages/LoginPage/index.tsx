@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { AccountCircle, Lock } from '@mui/icons-material';
+import { AccountCircle, Lock, Refresh } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -20,6 +21,8 @@ import { ILoginParams } from '@/types/auth';
 
 const LoginPage = () => {
   //#region Data
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { control, handleSubmit, reset } = useForm({
     resolver: loginResolver,
     mode: 'all',
@@ -30,37 +33,35 @@ const LoginPage = () => {
   //#endregion
 
   //#region Event
-  const DoSubmit = async (values: ILoginParams) => {
-    try {
-      const res = await login(values);
+  const onSubmit = () => {
+    handleSubmit(async (values: ILoginParams) => {
+      try {
+        setLoading(true);
+        const res = await login({ ...values, type: 4 });
 
-      const access_token = res?.data?.data?.['access-token'];
-      const refresh_token = res?.data?.data?.['refresh-token'];
+        const { access_token, refresh_token } = res?.data?.data;
 
-      dispatch(setToken({ access_token, refresh_token }));
+        dispatch(setToken({ access_token, refresh_token }));
 
-      await getProfile(access_token, refresh_token);
+        await getProfile(access_token);
 
-      toast.success('Đăng nhập thành công!');
-      reset(defaultValues);
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || 'Đăng nhập không thành công!',
-      );
-    }
-  };
-
-  const onSubmit = async (values: ILoginParams) => {
-    await DoSubmit(values);
+        toast.success('Đăng nhập thành công!');
+        reset(defaultValues);
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || 'Đăng nhập không thành công!',
+        );
+      } finally {
+        setLoading(false);
+      }
+    })();
   };
 
   const onKeyDown = (
     event: React.KeyboardEvent<HTMLDivElement | HTMLLabelElement>,
   ) => {
     if (event.key === 'Enter') {
-      handleSubmit(async (values) => {
-        await DoSubmit(values);
-      })();
+      onSubmit();
     }
   };
   //#endregion
@@ -104,9 +105,10 @@ const LoginPage = () => {
                   name="username"
                   render={({ field, fieldState: { error } }) => (
                     <CInput
-                      placeholder="Nhập username..."
                       {...field}
                       id="username"
+                      disabled={loading}
+                      placeholder="Nhập username..."
                       error={!!error}
                       helperText={error?.message}
                       startAdornment={
@@ -125,10 +127,11 @@ const LoginPage = () => {
                   name="password"
                   render={({ field, fieldState: { error } }) => (
                     <CInputPassword
-                      placeholder="Nhập password..."
                       {...field}
-                      onKeyDown={onKeyDown}
                       id="password"
+                      disabled={loading}
+                      placeholder="Nhập password..."
+                      onKeyDown={onKeyDown}
                       error={!!error}
                       helperText={error?.message}
                       startAdornment={
@@ -142,7 +145,14 @@ const LoginPage = () => {
               </Stack>
 
               <Box textAlign="center" mt={4}>
-                <Button type="submit">Đăng nhập</Button>
+                <Button
+                  type="button"
+                  disabled={loading}
+                  onClick={onSubmit}
+                  startIcon={loading && <Refresh className="anim-spin" />}
+                >
+                  Đăng nhập
+                </Button>
               </Box>
             </form>
           </Box>

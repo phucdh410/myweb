@@ -7,6 +7,7 @@ import { logout } from '@/apis/auth.api';
 import { NAVIGATIONS } from '@/constants/navigations';
 import { RootState } from '@/redux/';
 import { IAuthState } from '@/slices/auth';
+import { IPermissionState } from '@/slices/permission';
 
 import { CCollapse } from './CCollapse';
 import { CNavItem } from './CNavItem';
@@ -19,18 +20,24 @@ export const CNavigations = () => {
     (state) => state.auth.profile,
     shallowEqual,
   );
+
+  const permissions = useSelector<RootState, IPermissionState['permissions']>(
+    (state) => state.permission.permissions,
+    shallowEqual,
+  );
+
   const [current, setCurrent] = useState<string>(pathname.split('/')[1] || '');
 
-  if (!profile || !profile.permission) {
+  if (!profile || !permissions) {
     logout();
   }
 
   const navigations = useMemo(() => {
     return NAVIGATIONS.filter((nav, i) => {
-      if (nav.code) return profile?.permission.includes(nav.code);
+      if (nav.code) return permissions.includes(nav.code);
       else return true;
     });
-  }, [profile]);
+  }, [profile, permissions]);
 
   return (
     <NavigationContext.Provider value={{ current, setCurrent }}>

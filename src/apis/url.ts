@@ -7,11 +7,11 @@ export const PERMISSIONS = {
 };
 
 export const AUTH = {
-  LOGIN: '/auth/loginForWeb',
-  LOGOUT: '/auth/signOut',
+  LOGIN: '/auth/login',
+  LOGOUT: '/auth/logout',
   REFETCH_TOKEN: '/auth/refresh',
   DECODE: '/auth/decode',
-  REVOKE: '/auth/revoke',
+  GET_PROFILE: '/auth/get-profile',
 };
 
 export const USERS = {

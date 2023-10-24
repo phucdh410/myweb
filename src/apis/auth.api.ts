@@ -1,4 +1,4 @@
-import { post } from '@/axios/request';
+import { get, post } from '@/axios/request';
 import { ILoginParams, ILoginResponse, IProfileResponse } from '@/types/auth';
 import { IApiResponse } from '@/types/response';
 
@@ -10,12 +10,12 @@ export const login = (
   return post(AUTH.LOGIN, body);
 };
 
-export const decode = (): Promise<IApiResponse<IProfileResponse, any>> => {
-  return post(AUTH.DECODE);
+export const profile = (): Promise<IApiResponse<IProfileResponse, any>> => {
+  return get(AUTH.GET_PROFILE);
 };
 
 export const logout = () => {
-  return post(AUTH.LOGOUT);
+  return get(AUTH.LOGOUT);
 };
 
 export const refresh = (): Promise<IApiResponse<ILoginResponse, any>> => {

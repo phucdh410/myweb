@@ -23,13 +23,10 @@ export const authSlice = createSlice({
       state.access_token = action.payload?.access_token;
       state.refresh_token = action.payload?.refresh_token;
     },
-    setLoginTrue: (state) => {
-      state.isLogined = true;
-    },
   },
 });
 
-export const { setProfile, setToken, setLoginTrue } = authSlice.actions;
+export const { setProfile, setToken } = authSlice.actions;
 
 const persistConfig = {
   key: 'auth',
