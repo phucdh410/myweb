@@ -59,7 +59,7 @@ export const CInputPassword = forwardRef<
           ),
         }}
         sx={{
-          '& .MuiOutlinedInput-root': { backgroundColor: '#F5F5F5' },
+          // '& .MuiOutlinedInput-root': { backgroundColor: '#F5F5F5' },
           ...sx,
         }}
         error={error}

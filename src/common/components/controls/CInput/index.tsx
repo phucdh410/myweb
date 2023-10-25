@@ -38,7 +38,7 @@ export const CInput = forwardRef<ICInputRef, ICInputProps>(
         type={type}
         autoComplete={autoComplete}
         sx={{
-          '& .MuiOutlinedInput-root': { backgroundColor: '#F5F5F5' },
+          // '& .MuiOutlinedInput-root': { backgroundColor: '#F5F5F5' },
           ...sx,
         }}
         error={error}

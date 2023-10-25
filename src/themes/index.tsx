@@ -65,6 +65,10 @@ let theme = createTheme({
       main: '#177DB8',
       contrastText: '#ffffff',
     },
+    textLabel: {
+      main: '#212b36',
+      contrastText: '#ffffff',
+    },
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
@@ -72,7 +76,7 @@ let theme = createTheme({
     htmlFontSize: 16,
     fontWeightRegular: 400,
     allVariants: {
-      color: '#9ba6ae',
+      color: '#212b36',
     },
   },
 });
@@ -145,9 +149,7 @@ theme = createTheme(theme, {
     },
     MuiSvgIcon: {
       styleOverrides: {
-        root: {
-          color: '#124874',
-        },
+        root: {},
       },
     },
     MuiTypography: {
@@ -170,7 +172,21 @@ theme = createTheme(theme, {
       },
       styleOverrides: {
         root: {
-          borderRadius: '10px',
+          borderRadius: '8px',
+          '.MuiFormLabel-root.MuiInputLabel-root': {
+            color: 'rgb(145, 158, 171)',
+            fontSize: '0.875rem',
+            lineHeight: 1.57143,
+            '&.MuiInputLabel-shrink': {
+              fontWeight: 600,
+              lineHeight: 1.5,
+              fontSize: '1rem',
+              color: 'rgb(99, 115, 129)',
+              '&.Mui-focused': {
+                color: 'rgb(33, 43, 54)',
+              },
+            },
+          },
           '&.search-input': {
             filter: 'drop-shadow(5px 3px 30px rgba(19, 70, 131, 0.1))',
           },
@@ -203,50 +219,55 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           borderRadius: 'inherit',
-          '&.MuiInputBase-adornedStart': {
-            input: {
-              paddingLeft: '0!important',
-            },
-          },
+          color: 'rgb(33, 43, 54)',
+          // '&.MuiInputBase-adornedStart': {
+          //   input: {
+          //     paddingLeft: '0!important',
+          //   },
+          // },
           '&.Mui-focused': {
             '& .MuiOutlinedInput-notchedOutline': {
-              border: '1px solid #cdb4ff',
+              borderColor: 'rgb(33 43 54)',
             },
           },
-          '&.Mui-error': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: '1px solid #d32f2f!important',
-            },
-            '& .MuiSvgIcon-root': {
-              color: '#d32f2f!important',
-            },
-          },
-          '&:hover': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: '1px solid #12487445!important',
-            },
-          },
-          '&.Mui-disabled': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: 'none!important',
-            },
-          },
+          // '&.Mui-error': {
+          //   '& .MuiOutlinedInput-notchedOutline': {
+          //     border: '1px solid #d32f2f!important',
+          //   },
+          //   '& .MuiSvgIcon-root': {
+          //     color: '#d32f2f!important',
+          //   },
+          // },
+          // '&:hover': {
+          //   '& .MuiOutlinedInput-notchedOutline': {
+          //     border: '1px solid #12487445!important',
+          //   },
+          // },
+          // '&.Mui-disabled': {
+          //   '& .MuiOutlinedInput-notchedOutline': {
+          //     border: 'none!important',
+          //   },
+          // },
         },
         input: {
-          padding: '10px 15px',
+          lineHeight: 1.57143,
+          fontSize: '0.875rem',
           fontWeight: 500,
-          '&::placeholder': {
-            color: '#5B5B5B',
-            opacity: 0.8,
-            fontWeight: 400,
-          },
+          // padding: '10px 15px',
+          // fontWeight: 500,
+          // '&::placeholder': {
+          //   color: '#5B5B5B',
+          //   opacity: 0.8,
+          //   fontWeight: 400,
+          // },
         },
         notchedOutline: {
-          border: 'none',
+          // border: 'none',
+          borderColor: 'rgba(145, 158, 171, 0.2)',
         },
         multiline: {
-          padding: 0,
-          backgroundColor: theme.palette.inputBg.main,
+          // padding: 0,
+          // backgroundColor: theme.palette.inputBg.main,
         },
       },
     },
@@ -256,6 +277,7 @@ theme = createTheme(theme, {
       },
       styleOverrides: {
         root: {
+          textTransform: 'none',
           '& .MuiSvgIcon-root': {
             color: 'inherit',
           },
@@ -280,10 +302,22 @@ theme = createTheme(theme, {
             },
           },
         },
+        contained: {
+          backgroundColor: theme.palette.textLabel.main,
+          '&:hover': {
+            backgroundColor: 'rgb(69, 79, 91)',
+          },
+        },
         outlined: {
           borderWidth: '2px',
           '&:hover': {
             borderWidth: '2px',
+          },
+        },
+        text: {
+          '&:hover': {
+            backgroundColor: 'transparent',
+            textDecoration: 'underline',
           },
         },
       },
@@ -470,6 +504,7 @@ declare module '@mui/material/styles' {
     textTable: Palette['primary'];
     inputBg: Palette['primary'];
     subBlue: Palette['primary'];
+    textLabel: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
@@ -478,6 +513,7 @@ declare module '@mui/material/styles' {
     textTable?: PaletteOptions['primary'];
     inputBg?: PaletteOptions['primary'];
     subBlue?: PaletteOptions['primary'];
+    textLabel?: PaletteOptions['primary'];
   }
 }
 
@@ -487,6 +523,7 @@ declare module '@mui/material/Button' {
     textTable: true;
     inputBg: true;
     subBlue: true;
+    textLabel: true;
   }
 }
 

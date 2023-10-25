@@ -62,7 +62,7 @@ export const CSearchInput = forwardRef<ICSearchInputRef, ICSearchInputProps>(
           // ) : null,
         }}
         sx={{
-          '& .MuiOutlinedInput-root': { backgroundColor: '#ffffff' },
+          // '& .MuiOutlinedInput-root': { backgroundColor: '#ffffff' },
           ...sx,
         }}
         {...props}
