@@ -4,10 +4,12 @@
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
 html,
 body {
+  box-sizing: border-box;
   font-family: $font-montserrat;
   // font-family: 'Playpen Sans', cursive;
   // font-family: 'Raleway', sans-serif;

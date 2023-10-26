@@ -69,6 +69,14 @@ let theme = createTheme({
       main: '#212b36',
       contrastText: '#ffffff',
     },
+    textPrimary: {
+      main: 'rgb(33, 43, 54)',
+      contrastText: '#ffffff',
+    },
+    textSecondary: {
+      main: 'rgb(145, 158, 171)',
+      contrastText: '#ffffff',
+    },
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
@@ -78,6 +86,16 @@ let theme = createTheme({
     allVariants: {
       color: '#212b36',
     },
+  },
+  zIndex: {
+    mobileStepper: 1000,
+    fab: 1050,
+    speedDial: 1050,
+    appBar: 1100,
+    drawer: 1200,
+    modal: 1300,
+    snackbar: 1400,
+    tooltip: 1500,
   },
 });
 //#endregion
@@ -174,7 +192,7 @@ theme = createTheme(theme, {
         root: {
           borderRadius: '8px',
           '.MuiFormLabel-root.MuiInputLabel-root': {
-            color: 'rgb(145, 158, 171)',
+            color: theme.palette.textSecondary.main,
             fontSize: '0.875rem',
             lineHeight: 1.57143,
             '&.MuiInputLabel-shrink': {
@@ -183,7 +201,7 @@ theme = createTheme(theme, {
               fontSize: '1rem',
               color: 'rgb(99, 115, 129)',
               '&.Mui-focused': {
-                color: 'rgb(33, 43, 54)',
+                color: theme.palette.textPrimary.main,
               },
             },
           },
@@ -219,7 +237,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           borderRadius: 'inherit',
-          color: 'rgb(33, 43, 54)',
+          color: theme.palette.textPrimary.main,
           // '&.MuiInputBase-adornedStart': {
           //   input: {
           //     paddingLeft: '0!important',
@@ -499,12 +517,15 @@ declare module '@mui/material/styles' {
     '3xl': true;
     '4xl': true;
   }
+
   interface Palette {
     skyblue: Palette['primary'];
     textTable: Palette['primary'];
     inputBg: Palette['primary'];
     subBlue: Palette['primary'];
     textLabel: Palette['primary'];
+    textPrimary: Palette['primary'];
+    textSecondary: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
@@ -514,6 +535,8 @@ declare module '@mui/material/styles' {
     inputBg?: PaletteOptions['primary'];
     subBlue?: PaletteOptions['primary'];
     textLabel?: PaletteOptions['primary'];
+    textPrimary?: PaletteOptions['primary'];
+    textSecondary?: PaletteOptions['primary'];
   }
 }
 
@@ -524,6 +547,8 @@ declare module '@mui/material/Button' {
     inputBg: true;
     subBlue: true;
     textLabel: true;
+    textPrimary: true;
+    textSecondary: true;
   }
 }
 
