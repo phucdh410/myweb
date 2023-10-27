@@ -1,4 +1,3 @@
 export interface ICSidebarProps {
-  open: boolean;
-  toggleSidebar: () => void;
+  isCollapse: boolean;
 }

@@ -20,7 +20,7 @@ const CMainLayout = () => {
     shallowEqual,
   );
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   //#endregion
 
   //#region Event
@@ -34,7 +34,7 @@ const CMainLayout = () => {
         {open ? <ChevronLeft /> : <ChevronRight />}
       </ToggleSidebarButton>
       <Drawer variant="permanent" open={open}>
-        <CSidebar />
+        <CSidebar isCollapse={!open} />
       </Drawer>
       <Box>
         <Suspense fallback={<CPageLoader />}>

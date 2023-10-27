@@ -35,7 +35,7 @@ export const ToggleSidebarButton = styled(IconButton, {
 })<IStyledToggleButton>(
   ({ theme, open }): CSSObject => ({
     position: 'absolute',
-    top: 100,
+    top: 50,
     '.MuiSvgIcon-root': {
       width: 16,
       height: 16,

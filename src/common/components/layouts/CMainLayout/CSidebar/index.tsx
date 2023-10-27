@@ -1,18 +1,14 @@
-import { Box, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 
-import { NAVIGATIONS } from '@/constants/navigations';
+import { CNavigationCollapse } from './CNavigationCollapse';
+import { CNavigationExpand } from './CNavigationExpand';
+import { ICSidebarProps } from './types';
 
-import { CGroupItem } from './CGroupItem';
-
-export const CSidebar = () => {
+export const CSidebar: React.FC<ICSidebarProps> = ({ isCollapse }) => {
   return (
-    <Box position="relative" height="100%" py={5} px={1.5}>
+    <Box position="relative" height="100%" py={5} px={isCollapse ? 0.5 : 1.5}>
       <Box mb={3}>Logo</Box>
-      <Stack direction="column">
-        {NAVIGATIONS.map((e) => (
-          <CGroupItem key={e.id} data={e} />
-        ))}
-      </Stack>
+      {isCollapse ? <CNavigationCollapse /> : <CNavigationExpand />}
     </Box>
   );
 };
