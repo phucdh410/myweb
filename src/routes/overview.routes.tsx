@@ -1,4 +1,4 @@
-// import { lazy } from 'react';
+import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { PERMISSIONS_ENUM } from '@/constants/enums';
@@ -6,9 +6,9 @@ import { PERMISSIONS_ENUM } from '@/constants/enums';
 import { loader } from './redirect';
 import { ROUTES } from './routes';
 
-// const ListEmployeesPage = lazy(
-//   () => import('@/modules/staff/pages/ListEmployeesPage'),
-// );
+const OverviewFilePage = lazy(
+  () => import('@/modules/file/pages/OverviewFilePage'),
+);
 
 export const OverviewRoutes: RouteObject[] = [
   {
@@ -34,7 +34,7 @@ export const OverviewRoutes: RouteObject[] = [
   },
   {
     path: ROUTES.OVERVIEW.FILE,
-    element: <div>file</div>,
+    element: <OverviewFilePage />,
   },
 ].map((route) => ({
   ...route,

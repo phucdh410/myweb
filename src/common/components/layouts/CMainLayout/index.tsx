@@ -2,7 +2,7 @@ import { Suspense, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { Box, Stack } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 
 import { RootState } from '@/redux/';
 import { ROUTES } from '@/routes/routes';
@@ -20,7 +20,7 @@ const CMainLayout = () => {
     shallowEqual,
   );
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   //#endregion
 
   //#region Event
@@ -36,10 +36,17 @@ const CMainLayout = () => {
       <Drawer variant="permanent" open={open}>
         <CSidebar isCollapse={!open} />
       </Drawer>
-      <Box>
-        <Suspense fallback={<CPageLoader />}>
-          <Outlet />
-        </Suspense>
+      <Box flex={1}>
+        <Box height={80} position="fixed" top={0}>
+          Header
+        </Box>
+        <Box padding="88px 16px">
+          <Container maxWidth="4xl">
+            <Suspense fallback={<CPageLoader />}>
+              <Outlet />
+            </Suspense>
+          </Container>
+        </Box>
       </Box>
     </Stack>
   ) : (
