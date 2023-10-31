@@ -37,7 +37,9 @@ export const CUploadModal = forwardRef<ICUploadModalRef, ICUploadModalProps>(
       const addFiles: File[] = [];
 
       const droppedFiles = e.dataTransfer.files;
-      const droppedItems = e.dataTransfer.items;
+      const entries = Array.from(e.dataTransfer.items, (value) =>
+        value.webkitGetAsEntry(),
+      );
 
       for (let i = 0; i < droppedFiles.length; i++) {
         const _file = droppedFiles[i];
@@ -46,12 +48,13 @@ export const CUploadModal = forwardRef<ICUploadModalRef, ICUploadModalProps>(
           addFiles.push(_file);
         } else {
           //* Type Folder/Directory
-          const directoryEntry = droppedItems[i].webkitGetAsEntry();
-          addFiles.push(
-            ...(await readDirectoryAsync(
-              directoryEntry as FileSystemDirectoryEntry,
-            )),
-          );
+          if (entries[i] && entries[i]?.isDirectory) {
+            addFiles.push(
+              ...(await readDirectoryAsync(
+                entries[i] as FileSystemDirectoryEntry,
+              )),
+            );
+          }
         }
       }
 
