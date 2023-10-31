@@ -19,6 +19,8 @@ import {
   CIconZipFile,
 } from '@/icons/';
 
+import { formatBytes } from '../functions';
+
 import { ICFilesListProps } from './types';
 
 export type TFileTypes =
@@ -68,6 +70,7 @@ export const CFilesList: React.FC<ICFilesListProps> = ({ files, onRemove }) => {
       const fileType = getFileType(file.name);
       return Object.assign(file, {
         icon: FILE_ICONS[fileType] || FILE_ICONS['other'],
+        displaySize: formatBytes(file.size),
       });
     });
   }, [files]);
@@ -123,16 +126,25 @@ export const CFilesList: React.FC<ICFilesListProps> = ({ files, onRemove }) => {
               >
                 {file.icon}
               </Stack>
-              <Stack flex={1}>
+              <Stack flex={1} overflow="hidden">
                 <Typography
                   color="rgb(33, 43, 54)"
                   fontWeight={600}
                   fontSize={14}
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                  overflow="hidden"
+                  pr={2}
+                  maxWidth="100%"
                 >
                   {file.name}
                 </Typography>
-                <Typography color="rgb(99, 115, 129)" fontSize={12}>
-                  {file.size}
+                <Typography
+                  color="rgb(99, 115, 129)"
+                  fontSize={12}
+                  fontWeight={500}
+                >
+                  {file.displaySize}
                 </Typography>
               </Stack>
               <IconButton size="small" onClick={() => onRemove?.(i)}>
