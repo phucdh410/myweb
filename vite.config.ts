@@ -26,6 +26,9 @@ export default defineConfig(({ mode }) => {
         '@/controls': fileURLToPath(
           new URL('./src/common/components/controls/index.ts', import.meta.url),
         ),
+        '@/icons': fileURLToPath(
+          new URL('./src/common/components/icons/index.ts', import.meta.url),
+        ),
         '@/layouts': fileURLToPath(
           new URL('./src/common/components/layouts', import.meta.url),
         ),

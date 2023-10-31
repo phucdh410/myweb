@@ -6,6 +6,7 @@
       "@/others/": ["./src/common/components/others/index.ts"],
       "@/errors/": ["./src/common/components/errors/index.ts"],
       "@/controls/": ["./src/common/components/controls/index.ts"],
+      "@/icons/": ["./src/common/components/icons/index.ts"],
       "@/layouts/*": ["./src/common/components/layouts/*"],
       "@/modules/*": ["./src/modules/*"],
       "@/funcs/": ["./src/utils/funcs/index.ts"],

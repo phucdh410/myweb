@@ -1,7 +1,9 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { Close, CloudUpload } from '@mui/icons-material';
-import { IconButton, Modal, Stack, Typography } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
+import { Modal, Stack, Typography } from '@mui/material';
 
+import { CFilesList } from './CFilesList';
+import { readDirectoryAsync } from './functions';
 import { Image } from './Image';
 import {
   StyledPaper,
@@ -10,28 +12,12 @@ import {
 } from './StyledComponent';
 import { ICUploadModalProps, ICUploadModalRef } from './types';
 
-const convertEntryToFile = async (
-  entry: FileSystemFileEntry,
-): Promise<File | null> => {
-  return new Promise((resolve) => {
-    entry.file(
-      (file) => {
-        resolve(file);
-      },
-      () => {
-        resolve(null);
-      },
-    );
-  });
-};
-
 export const CUploadModal = forwardRef<ICUploadModalRef, ICUploadModalProps>(
   ({ ...props }, ref) => {
     //#region Data
     const [open, setOpen] = useState<boolean>(true);
 
     const [files, setFiles] = useState<File[]>([]);
-    console.log('🚀 ~ file: index.tsx:19 ~ files:', files);
     //#endregion
 
     //#region Event
@@ -44,53 +30,38 @@ export const CUploadModal = forwardRef<ICUploadModalRef, ICUploadModalProps>(
       e.preventDefault();
     };
 
-    const getAllFilesInDirectory = async (
-      directory: FileSystemDirectoryEntry,
-    ): Promise<File[]> => {
-      const reader = directory.createReader();
-      let newFiles: File[] = [];
-      reader.readEntries(async (entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.isDirectory) {
-            const files = await getAllFilesInDirectory(
-              entry as FileSystemDirectoryEntry,
-            );
-            if (files.length > 0) {
-              newFiles = [...newFiles, ...files];
-            }
-          } else {
-            const file = await convertEntryToFile(entry as FileSystemFileEntry);
-            file && newFiles.push(file);
-          }
-        });
-      });
-      return newFiles;
-    };
-
     const onDrop = async (e: React.DragEvent<HTMLDivElement>) => {
       e.stopPropagation();
       e.preventDefault();
 
-      const length = e.dataTransfer.items.length;
+      const addFiles: File[] = [];
 
-      let newFiles: File[] = [];
-      for (let i = 0; i < length; i++) {
-        const entry = e.dataTransfer.items[i].webkitGetAsEntry();
-        if (entry?.isFile) {
-          const file = await convertEntryToFile(entry as FileSystemFileEntry);
-          file && newFiles.push(file);
-        } else if (entry?.isDirectory) {
-          const files = await getAllFilesInDirectory(
-            entry as FileSystemDirectoryEntry,
+      const droppedFiles = e.dataTransfer.files;
+      const droppedItems = e.dataTransfer.items;
+
+      for (let i = 0; i < droppedFiles.length; i++) {
+        const _file = droppedFiles[i];
+        if (_file.type !== '') {
+          //* Type File
+          addFiles.push(_file);
+        } else {
+          //* Type Folder/Directory
+          const directoryEntry = droppedItems[i].webkitGetAsEntry();
+          addFiles.push(
+            ...(await readDirectoryAsync(
+              directoryEntry as FileSystemDirectoryEntry,
+            )),
           );
-          console.log('🚀 ~ file: index.tsx:86 ~ onDrop ~ files:', files);
-
-          if (files.length > 0) {
-            newFiles = [...newFiles, ...files];
-          }
         }
       }
-      setFiles((prev) => [...prev, ...newFiles]);
+
+      setFiles((prev) => [...prev, ...addFiles]);
+    };
+
+    const onRemoveItem = (index: number) => {
+      const newValue = [...files];
+      newValue.splice(index, 1);
+      setFiles(newValue);
     };
     //#endregion
 
@@ -151,29 +122,9 @@ export const CUploadModal = forwardRef<ICUploadModalRef, ICUploadModalProps>(
               </Typography>
             </Stack>
 
-            <Stack direction="column" gap={1}>
-              {files.map((file, i) => (
-                <Stack
-                  key={file.toString() + i}
-                  direction="row"
-                  alignItems="center"
-                  gap={2}
-                  py={1}
-                  px={1.5}
-                  borderRadius="8px"
-                  border="1px solid rgba(145, 158, 171, 0.16)"
-                >
-                  <div>Icon</div>
-                  <Stack>
-                    <Typography>{file.name}</Typography>
-                    <Typography>{file.size}</Typography>
-                  </Stack>
-                  <IconButton>
-                    <Close />
-                  </IconButton>
-                </Stack>
-              ))}
-            </Stack>
+            {files.length > 0 && (
+              <CFilesList files={files} onRemove={onRemoveItem} />
+            )}
 
             <Stack alignSelf="end" direction="row" gap={1}>
               <StyledUploadButton startIcon={<CloudUpload />}>
